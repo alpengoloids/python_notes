@@ -1,0 +1,232 @@
+----> Cloning from GitHub
+
+08:35 ~ $ pwd
+/home/alpengoloids                                                                                                                                                                                                
+08:35 ~ $ git clone https://github.com/alpengoloids/food_tracker.git
+Cloning into 'food_tracker'...                                                                                                                                                                                    
+remote: Enumerating objects: 35, done.
+remote: Counting objects: 100% (35/35), done.
+remote: Compressing objects: 100% (33/33), done.
+remote: Total 35 (delta 2), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (35/35), done.                                                                                                                                                                            
+Checking connectivity... done.                                                                                                                                                                                    
+08:35 ~ $ ls -l                                                                                                                                                                                                   
+total 8                                                                                                                                                                                                           
+-rwxr-xr-x 1 alpengoloids registered_users  232 Feb 15 08:25 README.txt                                                                                                                                           
+drwxrwxr-x 6 alpengoloids registered_users 4096 Feb 15 08:35 food_tracker                                                                                                                                         
+08:35 ~ $ 
+
+
+----> Setting up virtual environment:
+
+08:38 ~ $ mkvirtualenv --python=/usr/bin/python3.7 food_tracker_env                                                                                                                                               
+Running virtualenv with interpreter /usr/bin/python3.7                                                                                                                                                            
+Already using interpreter /usr/bin/python3.7                                                                                                                                                                      
+Using base prefix '/usr'                                                                                                                                                                                          
+New python executable in /home/alpengoloids/.virtualenvs/food_tracker_env/bin/python3.7                                                                                                                           
+Also creating executable in /home/alpengoloids/.virtualenvs/food_tracker_env/bin/python                                                                                                                           
+Installing setuptools, pip, wheel...                                                                                                                                                                              
+done.                                                                                                                                                                                                             
+virtualenvwrapper.user_scripts creating /home/alpengoloids/.virtualenvs/food_tracker_env/bin/predeactivate                                                                                                        
+virtualenvwrapper.user_scripts creating /home/alpengoloids/.virtualenvs/food_tracker_env/bin/postdeactivate                                                                                                       
+virtualenvwrapper.user_scripts creating /home/alpengoloids/.virtualenvs/food_tracker_env/bin/preactivate                                                                                                          
+virtualenvwrapper.user_scripts creating /home/alpengoloids/.virtualenvs/food_tracker_env/bin/postactivate                                                                                                         
+virtualenvwrapper.user_scripts creating /home/alpengoloids/.virtualenvs/food_tracker_env/bin/get_env_details                                                                                                      
+(food_tracker_env) 08:39 ~ $   
+
+
+
+...in PythonAnywhere site:
+  -> WEB tab
+
+---> 'VirtualEnv' section
+Input the webapp:
+VirtualEnv:
+input virtualproject
+https://www.pythonanywhere.com/user/alpengoloids/webapps/
+
+
+---> 'Code' section
+
+Code:
+What your site is running.
+
+Source code: 			Enter the path to your web app source code
+Working directory:		/home/alpengoloids/					Go to directory
+WSGI configuration file:	/var/www/alpengoloids_pythonanywhere_com_wsgi.py <-- Click this
+Python version:			3.7
+
+
+##### START entries below only:
+
+# This file contains the WSGI configuration required to serve up your
+# web application at http://alpengoloids.pythonanywhere.com/
+# It works by setting the variable 'application' to a WSGI handler of some
+# description.
+#
+
+# +++++++++++ GENERAL DEBUGGING TIPS +++++++++++
+# getting imports and sys.path right can be fiddly!
+# We've tried to collect some general tips here:
+# https://help.pythonanywhere.com/pages/DebuggingImportError
+
+
+# +++++++++++ DJANGO +++++++++++
+# To use your own django app use code like this:
+import os
+import sys
+#
+## assuming your django settings file is at '/home/alpengoloids/mysite/mysite/settings.py'
+## and your manage.py is is at '/home/alpengoloids/mysite/manage.py'
+#path = '/home/alpengoloids/mysite'
+path = '/home/alpengoloids/food_tracker'
+if path not in sys.path:
+    sys.path.append(path)
+#
+#os.environ['DJANGO_SETTINGS_MODULE'] = 'mysite.settings'
+os.environ['DJANGO_SETTINGS_MODULE'] = 'food_tracker.settings'
+#
+## then:
+from django.core.wsgi import get_wsgi_application
+application = get_wsgi_application()
+
+##### END entries below only:
+
+ -- Error will be encountered once you try to access the website itself
+
+ -> 'FILES' tab
+  then edit: /home/alpengoloids/food_tracker/food_tracker/settings.py
+
+Then edit the ALLOWED_HOSTS entries:
+
+ """
+Django settings for food_tracker project.
+
+Generated by 'django-admin startproject' using Django 2.2.
+
+For more information on this file, see
+https://docs.djangoproject.com/en/2.2/topics/settings/
+
+For the full list of settings and their values, see
+https://docs.djangoproject.com/en/2.2/ref/settings/
+"""
+
+import os
+
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+# Quick-start development settings - unsuitable for production
+# See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = '62n)712ljo$)hg@l=f^@dh!0(#b@)vf2i64_c-!bjn07z6+u6k'
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
+
+ALLOWED_HOSTS = ['alpengoloids.pythonanywhere.com']  <=== PUT YOUR WEBSITE
+
+
+# Application definition
+
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'food',
+]
+
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+ROOT_URLCONF = 'food_tracker.urls'
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
+
+WSGI_APPLICATION = 'food_tracker.wsgi.application'
+
+
+# Database
+# https://docs.djangoproject.com/en/2.2/ref/settings/#databases
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
+
+
+# Password validation
+# https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
+
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
+]
+
+
+# Internationalization
+# https://docs.djangoproject.com/en/2.2/topics/i18n/
+
+LANGUAGE_CODE = 'en-us'
+
+TIME_ZONE = 'UTC'
+
+USE_I18N = True
+
+USE_L10N = True
+
+USE_TZ = True
+
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/2.2/howto/static-files/
+
+STATIC_URL = '/static/'
+
+
+
+
+
+
+
+
+
+

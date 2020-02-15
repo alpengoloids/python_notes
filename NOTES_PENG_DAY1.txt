@@ -1,0 +1,414 @@
+
+---CHECKING IF INSTALLED:
+C:\Users\Shortcourse>python
+Python 3.7.1rc1 (v3.7.1rc1:2064bcf6ce, Sep 26 2018, 15:15:36) [MSC v.1914 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+>>>
+>>>
+>>> exit()  <---- to exit or Ctrl + C
+
+C:\Users\Shortcourse>
+
+---TYPE OF ERRORS:
+Syntax Errors: Did not follow syntax (e.g. typos/indentions/letter cases)
+Runtime Errors:  Errors upon running programs (e.g. infinite loops)
+Semantic Errors: Not the intended outputs/results (e.g. algorithm)
+
+	Exception error: Another way to output error messages
+	Semantics: Meaning of a program
+
+-EXPERIMENTAL DEBUGGING-
+
+
+--- FIRST PYTHON PROGRAM:
+C:\Users\Shortcourse>python
+Python 3.7.1rc1 (v3.7.1rc1:2064bcf6ce, Sep 26 2018, 15:15:36) [MSC v.1914 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+>>> print ("Hello, World!")
+Hello, World!
+>>> print("Hello, World!")
+Hello, World!
+>>>
+
+
+SYNTAX ERRORS:
+>>> print "Hello, World!"
+  File "<stdin>", line 1
+    print "Hello, World!"
+                        ^
+SyntaxError: Missing parentheses in call to 'print'. Did you mean print("Hello, World!")?
+>>>
+
+
+=====================================
+VARIABLES, EXPRESSIONS and STATEMENTS
+=====================================
+
+Datatypes:
+ - Integer
+  - float
+ - String
+  - tuple (fixed,constants)
+   - list (dynamic,interchangeable)
+ - Dictionary
+
+Type of Dataypes:
+Atomic Datatypes: Integer, Float, Boolean,  
+Collection Datatypes: tuple, list, set and Dictionary
+
+
+---VARIABLES:
+NOTE: 
+  - Variables are case sensitive (Bruce is different to bruce)
+  - Differentiate Class vs Variable (Class = Capital; Variable = Small letters)
+
+How to assign:
+>>> message = "hello world"
+>>> n = 17
+>>> pi = 3.14159
+
+To check what datatypes:
+>>> type(message)
+<class 'str'>
+>>> type(n)
+<class 'int'>
+>>> type(pi)
+<class 'float'>
+>>>
+
+Importing Modules:
+>>> import math
+>>> type (math)
+<class 'module'>
+>>> type(math)
+<class 'module'>
+>>> dir(math)
+['__doc__', '__loader__', '__name__', '__package__', '__spec__', 'acos', 'acosh', 'asin', 'asinh', 'atan', 'atan2', 'atanh', 'ceil', 'copysign', 'cos', 'cosh', 'degrees', 'e', 'erf', 'erfc', 'exp', 'expm1', 'fabs', 'factorial', 'floor', 'fmod', 'frexp', 'fsum', 'gamma', 'gcd', 'hypot', 'inf', 'isclose', 'isfinite', 'isinf', 'isnan', 'ldexp', 'lgamma', 'log', 'log10', 'log1p', 'log2', 'modf', 'nan', 'pi', 'pow', 'radians', 'remainder', 'sin', 'sinh', 'sqrt', 'tan', 'tanh', 'tau', 'trunc']
+>>>
+
+Simple Calculations:
+>>> print(20+32)
+52
+>>> print(5**2)
+25
+>>> (5+9)*(15-7)
+112
+>>>
+
+
+-- EXERCISE 1:
+>>> a = 2
+>>> b=2
+>>> c =2
+>>> print(a,b,c)
+2 2 2
+>>> s = (a+b+c)/2
+>>> print(s)
+3.0
+>>> area = math.sqrt(s*(s-a)*(s-b)*(s-c))
+>>> print(area)
+1.7320508075688772
+>>>
+
+
+==================
+FORMATTED PRINTING
+==================
+
+- placeholders
+%s = string
+%d = integers
+
+>>> my_name="Mary Jane"
+>>> print("Let's talk about %s" % (my_name))
+Let's talk about Mary Jane
+>>>
+
+---
+
+>>> my_name="Mary Jane"
+>>> print("Let's talk about %s" % (my_name))
+Let's talk about Mary Jane
+
+>>> country = "Indonesia"
+>>> punishment = "firing squad"
+>>> print("In %s, she'll be executed through %s" % (country, punishment))
+In Indonesia, she'll be executed through firing squad
+
+>>> print("In %s, she'll be executed through %s" % (country, country))
+In Indonesia, she'll be executed through Indonesia
+>>> print("In %s, she'll be executed through %s" % (country))
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: not enough arguments for format string
+>>> print("In %s, she'll be executed through %s" % (country,punishment))
+In Indonesia, she'll be executed through firing squad
+>>> print("In %s, she'll be executed through %s." % (country,punishment))
+In Indonesia, she'll be executed through firing squad.
+
+another sample:
+>>> print("%s is %d years of age %s" % (name, age, "Maybe.."))
+Mary Jane is 31 years of age Maybe..
+>>>
+
+
+formatter = "%r %r %r %r"
+print(formatter % (1,2,3,4))
+print(formatter % ("one","two","three","four"))
+
+====GETTING INPUTS FROM USERS====
+Sample:
+--> Always treating the input as "STRING"
+x = input()
+>>> x=input()
+3
+>>> print(x)
+3
+>>>
+
+--> 
+y = input("PLEASE ENTER A NUMBER")
+
+>>> x=input()
+3
+>>> print(y)
+3
+>>>
+
+TYPECASTING: converting datatypes of a variable
+To convert str to integer
+y=int(y)
+
+or..
+
+>>> y=int(input("PLEASE ENTER A NUMBER: "))
+PLEASE ENTER A NUMBER: 10
+>>> print(y**2)
+100
+>>> type(y)
+<class 'int'>
+>>>
+
+=============
+WRITING FILES
+=============
+
+Using "exists" function of "os.path" Module
+from sys import argv
+from os.path import exists
+
+script, from_file, to_file = argv
+input = open(from_file)
+indata = input.read()
+if not exists(to_file):
+	output = open(to_file, 'w')
+	output.write(indata)
+	output.close()
+input.close()
+
+
+====================
+LISTS (a.k.a Arrays)
+====================
+
+it can be...
+-- Homogenous, All Elements are the same datatypes:
+
+hairs = ["Brown", "Blond", "Red"]
+eyes = ["Brown", "Blue", "Green"]
+weights = [1,2,3,4]
+
+-- Heterogeneous, elements can be Mixed of datatypes
+infor = ["Cellphone", 23, 8.5, "name"]
+
+Elements:
+	 Element0  Element1 Element2
+hairs = ["Brown", "Blond", "Red"]
+
+Accessing elements:
+print(hair[1])
+
+sample:
+## declaring LISTS:
+>>> hairs = ["Brown", "Blond", "Red"]
+
+## print all elemets:
+>>> print(hairs)
+['Brown', 'Blond', 'Red']
+
+## print specific elements:
+>>> print(hairs[1])
+Blond
+>>> print(hairs[0])
+Brown
+>>>
+
+## Reverse printing
+>>> print(hairs[1])
+Blond
+>>> print(hairs[0])
+Brown
+>>> print(hairs[-3])
+Brown
+>>> print(hairs[-1])
+Red
+
+## Appending a new Element
+>>> hairs.append("Black")
+>>> print(hairs)
+['Brown', 'Blond', 'Red', 'Black']
+>>>
+
+## Extending then current list from an existing list
+>>> hairs.extend(hairs) 
+['brown', 'blond', 'red', 'black','brown', 'blond', 'red', 'black']
+
+## Inserting to a specific element
+>>> hairs.insert(1, 'violet')
+['brown', 'violet', 'blond', 'red', 'black','brown', 'blond', 'red', 'black']
+
+## Removing
+>>> hairs.remove('brown')
+['violet', 'blond', 'red', 'black','brown', 'blond', 'red', 'black']
+
+
+=====
+LOOPS
+=====
+---> FOR Loop:
+
+## Declaring....
+>>> hairs = ['brown', 'blond', 'red']
+
+## Actual loop...
+>>> for hair in hairs:
+...     print("Color: %s" % hair)
+...
+Color: brown
+Color: blond
+Color: red
+>>>
+
+--RANGES:
+-Sample1
+>>> for a in range(10):
+...     print(a)
+...
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+>>>
+
+-Sample2
+>>> x=700
+>>> y=710
+>>> for i in range(x,y):
+...     print(i)
+...
+700
+701
+702
+703
+704
+705
+706
+707
+708
+709
+>>>
+
+
+-Sample3
+>>> x=700
+>>> y=710
+>>> z=2
+>>> for i in range(x,y,z):
+...     print(i)
+...
+700
+702
+704
+706
+708
+>>>
+
+
+
+---> WHILE Loop:
+
+### Declaring...
+>>> i=0
+>>> numbers=[]
+
+### Actual WHILE Loop
+>>> while i < 6:
+...     print("At the top i is %d" % i)
+...     numbers.append(i)
+...     i=i+1
+...     print("Numbers now: ", numbers)
+...     print("At the bottom i is %d" % i)
+...
+At the top i is 0
+Numbers now:  [0]
+At the bottom i is 1
+At the top i is 1
+Numbers now:  [0, 1]
+At the bottom i is 2
+At the top i is 2
+Numbers now:  [0, 1, 2]
+At the bottom i is 3
+At the top i is 3
+Numbers now:  [0, 1, 2, 3]
+At the bottom i is 4
+At the top i is 4
+Numbers now:  [0, 1, 2, 3, 4]
+At the bottom i is 5
+At the top i is 5
+Numbers now:  [0, 1, 2, 3, 4, 5]
+At the bottom i is 6
+>>>
+
+
+### Another Sample:
+>>> while True:
+...     if x != 'z':
+...             x = input("Please enter a character: ")
+...     else:
+...             break
+...
+Please enter a character: a
+Please enter a character: s
+Please enter a character: v
+Please enter a character: g
+Please enter a character: w
+Please enter a character: s
+Please enter a character: z
+>>>
+
+
+
+
+
+>>> while True:
+...     if x == '1':
+...             Exercise 1.a = input("Please enter a character: ")
+	elseif x == '2'
+		Exercise 2.a = 
+...     else:
+...             break
+...
+Please enter a character: a
+Please enter a character: s
+Please enter a character: v
+Please enter a character: g
+Please enter a character: w
+Please enter a character: s
+Please enter a character: z
+>>>

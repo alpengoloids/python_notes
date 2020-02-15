@@ -1,0 +1,503 @@
+========
+FILE I/O
+========
+
+-- OPENING A FILE:
+file1 = open(file_name, mode)
+
+ex: 
+file1=open("readme.txt")
+file1=open("readme.txt", rb)
+
+-- READING/WRITING FROM THE FILE:
+file1.read(# of chars)	<--- per Character
+or 
+file1.readline()	<--- per Line	
+
+file1.write()
+
+ -- Bring back to specific position
+file1.seek(#)
+
+ -- Start from beginning
+file1.seek(0) 
+
+-- CLOSING A FILE
+file1.close()
+
+-- CHECKING IF FILE IS OPEN/CLOSED
+>> file1.closed
+>> False
+>> file1.close()
+>> file1.closed
+>> True
+
+
+
+>>> file1 = open("testfile.txt")
+>>> file.read()
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NameError: name 'file' is not defined
+>>> file1.read()
+'the quick brown fox jumps over the lazy dog.'
+>>> file1.read()
+''
+>>> file1.seek(0)
+0
+>>> file1.read()
+'the quick brown fox jumps over the lazy dog.'
+>>> file1.read(3)
+''
+>>> file1.read("3")
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: argument should be integer or None, not 'str'
+>>> file1.seek(0)
+0
+>>> file1.read(3)
+'the'
+>>> file1.read(3)
+' qu'
+>>> file1.read(3)
+'ick'
+>>>
+>>> file1.read(3)
+' br'
+>>> file1.read(3)
+'own'
+>>> file1.read(3)
+' fo'
+>>> file1.seek(0)
+0
+>>> file1.read()
+'the quick brown fox jumps over the lazy dog.'
+>>>
+
+
+
+=====
+REGEX
+=====
+
+import re
+-- re.search(regex, string)
+
+sample:
+### ONE OCCURENCE
+>>> import re
+>>> x = re.search("cat","A cat and rat can't be friends.")
+>>> print(x)
+<re.Match object; span=(2, 5), match='cat'>
+>>> x
+<re.Match object; span=(2, 5), match='cat'>
+>>> x = re.search("dog","A cat and rat can't be friends.")
+>>> print(x)
+None
+>>>
+
+### CASE SENSITIVE:
+>>> x = re.search("A","A cat and rat can't be friends.")
+>>> print(x)
+<re.Match object; span=(0, 1), match='A'>
+>>> x = re.search("a","A cat and rat can't be friends.")
+>>> print(x)
+<re.Match object; span=(3, 4), match='a'>
+>>>
+
+
+### MATCH ALL:
+ -- (".") dot symbol; work as a wildcards
+>>> x = re.findall(r".at","A cat and rat can't be friends.")
+>>> print(x)
+['cat', 'rat']
+>>>
+
+>>> x = re.findall(r".a.","A cat and rat can't be friends.")
+>>> print(x)
+['cat', ' an', 'rat', 'can']
+>>>
+
+  -- ("[]") Square Bracket; used to include character class
+[a-e] means [abcde]
+[0-5] means [012345]
+
+>>> x = re.findall(r"[abc]at","A cat and rat can't be friends.")
+>>> print(x)
+['cat']
+>>> x = re.findall(r"[abrc]at","A cat and rat can't be friends.")
+>>> print(x)
+['cat', 'rat']
+>>>
+
+  -- ("^") Caret Symbol; used directly after the opening square bracket to denote negation
+[^abc] means anything BUT an "a", "b" or "c"
+
+>>> x = re.findall(r"[^abc]at","A cat and rat can't be friends.")
+>>> print(x)
+['rat']
+>>> x = re.findall(r"[^abr]at","A cat and rat can't be friends.")
+>>> print(x)
+['cat']
+>>>
+
+ -- ("^") Caret Symbol; can also be used in start of string
+>>> x = re.findall(r"^A","A cat and rat can't be friends.")
+>>> print(x)
+['A']
+>>> x = re.findall(r"^A cat","A cat and rat can't be friends.")
+>>> print(x)
+['A cat']
+>>>
+
+ -- ("$") Dollar Symbol; matches end of a string
+>>> x = re.findall(r"friends.$","A cat and rat can't be friends.")
+>>> print(x)
+['friends.']
+>>>
+
+ -- ("?") Question Mark Symbol; declares preceding char or expression is optional
+>>> x = re.findall(r"c?at","A cat and a rat can't be friends.")
+>>> print(x)
+['cat', 'at']
+>>>
+
+>>> x = re.findall(r"n'?.","A cat and a rat can't be friends.")
+>>> print(x)
+['nd', "n't", 'nd']
+>>>
+
+>>> x = re.findall(r"n'?ds\.","A cat and a rat can't be friends.")
+>>> print(x)
+['nds.']
+>>>
+
+
+* (asterisk symbol) -- following a character or a subexpression means that this expression or character may be repeated arbitrarily, even zero times
++ (plus symbol) --  is very similar to the star operator, except that the character or subexpression followed by a "+" sign has to be repeated at least one time
+{from, to} -- this means that the expression has to appear at least "from" times and not more than "to" times. {, to} is an abbreviated spelling for {0,to} and {from,} is an abbreviation for "at least from times but no upper limit"
+
+
+>>> y = re.findall(r"Feb[ruary]* 2011", "Feb 2011")
+>>> print(y)
+
+
+['Feb 2011']
+>>> y = re.findall(r"Feb[ruary]+ 2011", "Feb 2011")
+>>> print(y)
+[]
+>>>
+
+### Simplified:
+
+\d	Matches any decimal digit; equivalent to the set [0-9].
+\D	The complement of \d. It matches any non-digit character; equivalent to the set [^0-9].
+\s	Matches any whitespace character; equivalent to [ \t\n\r\f\v].
+\S	The complement of \s. It matches any non-whitespace character; equiv. to [^ \t\n\r\f\v].
+\w	Matches any alphanumeric character; equivalent to [a-zA-Z0-9_]. With LOCALE, it will match the set [a-zA-Z0-9_] plus characters defined as letters for the current locale.
+\W	Matches the complement of \w.
+\b	Matches the empty string, but only at the start or end of a word.
+\B	Matches the empty string, but not at the start or end of a word.
+\\	Matches a literal backslash.
+
+
+### Find and replace:
+re.sub(regex, replacement, string)
+
+
+
+""EXERCISES""
+1. x = "abcdefghijklmnopqrstuvwxyz"
+
+Dictionary:
+2. Decode:
+hello
+u
+ 
+3.  
+
+4. 
+
+5. Alien
+
+6. 
+
+7. average of each letters (output dict)
+
+8. 
+
+
+
+======================
+DJANGO WEB DEVELOPMENT
+======================
+
+-- MVC Concept (web frameworks)
+ Model - Hadles your data representation
+ View - represents what you see in a browser
+ Controller - controls the flow of info between Model and View
+
+
+-- DJANGO MTV:
+ Model    == Model
+ Template == View
+ View     == Controller
+
+
+-- PREREQUISITES:
+ python
+ pip
+ virtualenv
+ django
+
+----- Setting UP virtual environment -----
+
+C:\Users\Shortcourse\Desktop\PENG\Projects\DJANGO>virtualenv food_tracker_env
+Using base prefix 'c:\\users\\shortcourse\\appdata\\local\\programs\\python\\python37'
+New python executable in C:\Users\Shortcourse\Desktop\PENG\Projects\DJANGO\food_tracker_env\Scripts\python.exe
+Installing setuptools, pip, wheel...done.
+
+C:\Users\Shortcourse\Desktop\PENG\Projects\DJANGO>dir
+ Volume in drive C is OS
+ Volume Serial Number is F634-DBB6
+
+ Directory of C:\Users\Shortcourse\Desktop\PENG\Projects\DJANGO
+
+08/02/2020  01:54 PM    <DIR>          .
+08/02/2020  01:54 PM    <DIR>          ..
+08/02/2020  01:54 PM    <DIR>          food_tracker_env
+               0 File(s)              0 bytes
+               3 Dir(s)  393,357,000,704 bytes free
+
+C:\Users\Shortcourse\Desktop\PENG\Projects\DJANGO>food_tracker_env\Scripts\activate
+
+(food_tracker_env) C:\Users\Shortcourse\Desktop\PENG\Projects\DJANGO>deactivate
+C:\Users\Shortcourse\Desktop\PENG\Projects\DJANGO>food_tracker_env\Scripts\activate
+
+(food_tracker_env) C:\Users\Shortcourse\Desktop\PENG\Projects\DJANGO>
+ 
+---> Installing Django (only in the VirtualEnv)
+NOTE: every virtual env, install django
+
+(food_tracker_env) C:\Users\Shortcourse\Desktop\PENG\Projects\DJANGO>pip list Django
+Package    Version
+---------- -------
+pip        20.0.2
+setuptools 45.1.0
+wheel      0.34.2
+
+(food_tracker_env) C:\Users\Shortcourse\Desktop\PENG\Projects\DJANGO>pip install Django==2.2
+Collecting Django==2.2
+  Using cached Django-2.2-py3-none-any.whl (7.4 MB)
+Collecting sqlparse
+  Using cached sqlparse-0.3.0-py2.py3-none-any.whl (39 kB)
+Collecting pytz
+  Using cached pytz-2019.3-py2.py3-none-any.whl (509 kB)
+Installing collected packages: sqlparse, pytz, Django
+Successfully installed Django-2.2 pytz-2019.3 sqlparse-0.3.0
+
+(food_tracker_env) C:\Users\Shortcourse\Desktop\PENG\Projects\DJANGO>
+
+---> Starting up django ---
+
+(food_tracker_env) C:\Users\Shortcourse\Desktop\PENG\Projects\DJANGO>django-admin startproject food_tracker
+
+(food_tracker_env) C:\Users\Shortcourse\Desktop\PENG\Projects\DJANGO>
+
+---> ALWAYS ACTIVATE ---
+C:\Users\Shortcourse\Desktop\PENG\Projects\DJANGO>food_tracker_env\Scripts\activate
+
+(food_tracker_env) C:\Users\Shortcourse\Desktop\PENG\Projects\DJANGO>cd food_tracker
+
+(food_tracker_env) C:\Users\Shortcourse\Desktop\PENG\Projects\DJANGO\food_tracker>
+
+
+---> Starting up webserver ---
+
+(food_tracker_env) C:\Users\Shortcourse\Desktop\PENG\Projects\DJANGO>cd food_tracker
+
+(food_tracker_env) C:\Users\Shortcourse\Desktop\PENG\Projects\DJANGO\food_tracker>python manage.py runserver
+Watching for file changes with StatReloader
+Performing system checks...
+
+System check identified no issues (0 silenced).
+
+You have 17 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): admin, auth, contenttypes, sessions.
+Run 'python manage.py migrate' to apply them.
+February 08, 2020 - 14:17:08
+Django version 2.2, using settings 'food_tracker.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CTRL-BREAK.
+
+
+---> Creating application/feature proper ---
+(food_tracker_env) C:\Users\Shortcourse\Desktop\PENG\Projects\DJANGO\food_tracker>python manage.py startapp food
+
+(food_tracker_env) C:\Users\Shortcourse\Desktop\PENG\Projects\DJANGO\food_tracker>
+
+---> Will generate below subfolders: 
+(food_tracker_env) C:\Users\Shortcourse\Desktop\PENG\Projects\DJANGO\food_tracker>dir food
+ Volume in drive C is OS
+ Volume Serial Number is F634-DBB6
+
+ Directory of C:\Users\Shortcourse\Desktop\PENG\Projects\DJANGO\food_tracker\food
+
+08/02/2020  02:22 PM    <DIR>          .
+08/02/2020  02:22 PM    <DIR>          ..
+08/02/2020  02:22 PM                66 admin.py
+08/02/2020  02:22 PM                88 apps.py
+08/02/2020  02:22 PM    <DIR>          migrations
+08/02/2020  02:22 PM                60 models.py
+08/02/2020  02:22 PM                63 tests.py
+08/02/2020  02:22 PM                66 views.py
+08/02/2020  02:22 PM                 0 __init__.py
+               6 File(s)            343 bytes
+               3 Dir(s)  393,270,452,224 bytes free
+
+(food_tracker_env) C:\Users\Shortcourse\Desktop\PENG\Projects\DJANGO\food_tracker>
+
+
+---> Update/Create Database (sqlite)
+
+(food_tracker_env) C:\Users\Shortcourse\Desktop\PENG\Projects\DJANGO\food_tracker>python manage.py migrate
+Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, sessions
+Running migrations:
+  Applying contenttypes.0001_initial... OK
+  Applying auth.0001_initial... OK
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying contenttypes.0002_remove_content_type_name... OK
+  Applying auth.0002_alter_permission_name_max_length... OK
+  Applying auth.0003_alter_user_email_max_length... OK
+  Applying auth.0004_alter_user_username_opts... OK
+  Applying auth.0005_alter_user_last_login_null... OK
+  Applying auth.0006_require_contenttypes_0002... OK
+  Applying auth.0007_alter_validators_add_error_messages... OK
+  Applying auth.0008_alter_user_username_max_length... OK
+  Applying auth.0009_alter_user_last_name_max_length... OK
+  Applying auth.0010_alter_group_name_max_length... OK
+  Applying auth.0011_update_proxy_permissions... OK
+  Applying sessions.0001_initial... OK
+
+(food_tracker_env) C:\Users\Shortcourse\Desktop\PENG\Projects\DJANGO\food_tracker>
+
+---> Once updates for any models
+(food_tracker_env) C:\Users\Shortcourse\Desktop\PENG\Projects\DJANGO\food_tracker>python manage.py makemigrations food
+Migrations for 'food':
+  food\migrations\0001_initial.py
+    - Create model Food
+    - Create model Meal
+
+(food_tracker_env) C:\Users\Shortcourse\Desktop\PENG\Projects\DJANGO\food_tracker>
+
+
+---> Commit Changes
+(food_tracker_env) C:\Users\Shortcourse\Desktop\PENG\Projects\DJANGO\food_tracker>python manage.py migrate
+Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, food, sessions
+Running migrations:
+  Applying food.0001_initial... OK
+
+(food_tracker_env) C:\Users\Shortcourse\Desktop\PENG\Projects\DJANGO\food_tracker>
+
+
+
+---> Adding Entries in DB via CLI:
+
+(food_tracker_env) C:\Users\Shortcourse\Desktop\PENG\Projects\DJANGO\food_tracker>python manage.py shell
+Python 3.7.1rc1 (v3.7.1rc1:2064bcf6ce, Sep 26 2018, 15:15:36) [MSC v.1914 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+>>> from food.models import Food
+>>> dir(Food)
+['DoesNotExist', 'MultipleObjectsReturned', '__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__setstate__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_check_column_name_clashes', '_check_constraints', '_check_field_name_clashes', '_check_fields', '_check_id_field', '_check_index_together', '_check_indexes', '_check_local_fields', '_check_long_column_names', '_check_m2m_through_same_relationship', '_check_managers', '_check_model', '_check_model_name_db_lookup_clashes', '_check_ordering', '_check_property_name_related_field_accessor_clashes', '_check_single_primary_key', '_check_swappable', '_check_unique_together', '_do_insert', '_do_update', '_get_FIELD_display', '_get_next_or_previous_by_FIELD', '_get_next_or_previous_in_order', '_get_pk_val', '_get_unique_checks', '_meta', '_perform_date_checks', '_perform_unique_checks', '_save_parents', '_save_table', '_set_pk_val', 'calories', 'check', 'clean', 'clean_fields', 'date_error_message', 'delete', 'from_db', 'full_clean', 'get_deferred_fields', 'id', 'meal_set', 'name', 'objects', 'pk', 'prepare_database_save', 'refresh_from_db', 'saturated_fat', 'save', 'save_base', 'serializable_value', 'total_fats', 'unique_error_message', 'validate_unique']
+>>> food = Food()
+>>> food.name = "Bread"
+>>> food.calorie = 50
+>>> food.total_fat = 0
+
+
+---> QUERYING:
+>>> foods = Food.objects.all()
+>>> print(foods)
+<QuerySet [<Food: Food object (1)>]>
+>>> food_1 = Food.objects.get(id=1)
+>>> food_bread = Food.objects.filter(name__iexact="Bread")
+>>> food_bread_exact = Food.objects.filter(name__exact="Bread")
+>>> food_bread_substring = Food.objects.filter(name__icontains="B")
+
+similar to: 
+# select * from food_food where name LIKE '%B%';
+
+
+---> UPDATING:
+>>> food_1 = Food.objects.get(id=1)
+>>> food_1.name = "Tinapay"
+>>> food_1.save()
+>>> print(food_1)
+Food object (1)
+>>> print(food_1.name)
+Tinapay
+>>>
+
+similar to:
+# update food_food set
+
+
+---> DELETE:
+>>> food_1 = Food.objects.get(id=1)
+>>> food_1.delete()
+
+
+
+---> CREATING ADMIN USERS:
+(food_tracker_env) C:\Users\Shortcourse\Desktop\PENG\Projects\DJANGO\food_tracker>python manage.py createsuperuser
+Username (leave blank to use 'shortcourse'): admin
+Email address: admin@mail.net
+Password:
+Password (again):
+This password is too common.
+Bypass password validation and create user anyway? [y/N]: y
+Superuser created successfully.
+
+(food_tracker_env) C:\Users\Shortcourse\Desktop\PENG\Projects\DJANGO\food_tracker>
+
+
+
+TEMPLATE TAGS and FILTERS
+
+---> DJANGO SPECIFIC COMMANDS:
+
+{% %} {% %} - template tags
+
+{{ }} - variable
+
+---> TO COMMENT:
+{% comment %}
+  this line will be commented out
+{% endcomment %}
+
+---> CSRF PROTECTION
+
+{% csrf_token %}
+
+ITERABLES:
+---> LIST:
+{% for hair in hairs %}
+ <p>{{ hair }}>/p
+{% endfor %}
+
+
+---> DICTIONARY:
+
+
+====================
+DJANGO CODING STEPS:
+====================
+
+1.MODEL 	- Create Models / Objects
+2.VIEW 		- Create VIEW / 
+3.TEMPLATE 	- Create HTML / GUI
+4.URL 		- Register VIEW in urls.py
